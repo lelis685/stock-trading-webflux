@@ -1,8 +1,8 @@
-package com.pluralsight.springwebflux6.stocktrading.dto;
+package com.springwebflux.stocktrading.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.pluralsight.springwebflux6.stocktrading.model.Stock;
 
+import com.springwebflux.stocktrading.model.Stock;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

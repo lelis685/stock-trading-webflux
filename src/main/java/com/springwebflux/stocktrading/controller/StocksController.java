@@ -1,17 +1,20 @@
-package com.pluralsight.springwebflux6.stocktrading.controller;
+package com.springwebflux.stocktrading.controller;
 
 
 import java.math.BigDecimal;
 
+
+import com.springwebflux.stocktrading.dto.StockRequest;
+import com.springwebflux.stocktrading.dto.StockResponse;
+import com.springwebflux.stocktrading.model.Stock;
+import com.springwebflux.stocktrading.service.StocksService;
 import lombok.AllArgsConstructor;
+
+
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import org.springframework.web.bind.annotation.*;
-
-import com.pluralsight.springwebflux6.stocktrading.dto.StockRequest;
-import com.pluralsight.springwebflux6.stocktrading.dto.StockResponse;
-import com.pluralsight.springwebflux6.stocktrading.service.StocksService;
 
 @AllArgsConstructor
 @RestController
