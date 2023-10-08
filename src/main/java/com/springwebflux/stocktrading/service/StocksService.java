@@ -3,6 +3,8 @@ package com.springwebflux.stocktrading.service;
 
 import com.springwebflux.stocktrading.dto.StockRequest;
 import com.springwebflux.stocktrading.dto.StockResponse;
+import com.springwebflux.stocktrading.exception.StockCreationException;
+import com.springwebflux.stocktrading.exception.StockNotFoundException;
 import com.springwebflux.stocktrading.repository.StocksRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +24,8 @@ public class StocksService {
 
     public Mono<StockResponse> getOneStock(String id) {
         return stocksRepository.findById(id)
-                .map(StockResponse::fromModel);
+                .map(StockResponse::fromModel)
+                .switchIfEmpty(Mono.error(new StockNotFoundException("Stock not found with id: " + id)));
     }
 
     public Flux<StockResponse> getAllStocks(BigDecimal priceGreaterThan) {
@@ -32,7 +35,10 @@ public class StocksService {
     }
 
     public Mono<StockResponse> createStock(StockRequest stockRequest) {
-        return stocksRepository.save(stockRequest.toModel())
-                .map(StockResponse::fromModel);
+        return Mono.just(stockRequest)
+                .map(StockRequest::toModel)
+                .flatMap(stock -> stocksRepository.save(stock))
+                .map(StockResponse::fromModel)
+                .onErrorMap(ex -> new StockCreationException(ex.getMessage()));
     }
 }

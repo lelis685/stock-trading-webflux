@@ -12,7 +12,7 @@ public class StockCreationException extends RuntimeException {
     public ProblemDetail asProblemDetail() {
         ProblemDetail problemDetail =
                 ProblemDetail.forStatusAndDetail(
-                        HttpStatus.NOT_FOUND, getMessage());
+                        HttpStatus.BAD_REQUEST, getMessage());
         problemDetail.setTitle("Unable to Create Stock");
         return problemDetail;
     }
