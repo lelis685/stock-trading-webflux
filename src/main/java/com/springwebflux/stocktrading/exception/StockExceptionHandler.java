@@ -1,4 +1,4 @@
-package com.pluralsight.springwebflux6.stocktrading.exception;
+package com.springwebflux.stocktrading.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
@@ -11,19 +11,13 @@ public class StockExceptionHandler {
 
     @ExceptionHandler(StockNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ProblemDetail handleStockNotFoundException(
-                            StockNotFoundException ex) {
-        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(
-            HttpStatus.NOT_FOUND, ex.getMessage());
-        
-        problemDetail.setTitle("Stock Not Found");
-        return problemDetail;
+    public ProblemDetail handleStockNotFoundException(StockNotFoundException ex) {
+        return ex.asProblemDetail();
     }
 
     @ExceptionHandler(StockCreationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ProblemDetail handleStockCreationException(
-                            StockCreationException ex) {
+    public ProblemDetail handleStockCreationException(StockCreationException ex) {
         return ex.asProblemDetail();
     }
 }

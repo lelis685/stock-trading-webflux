@@ -1,19 +1,16 @@
 package com.springwebflux.stocktrading.service;
 
 
-import java.math.BigDecimal;
-
 import com.springwebflux.stocktrading.dto.StockRequest;
 import com.springwebflux.stocktrading.dto.StockResponse;
 import com.springwebflux.stocktrading.repository.StocksRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import org.springframework.stereotype.Service;
-
-
+import java.math.BigDecimal;
 
 
 @Service
@@ -30,6 +27,7 @@ public class StocksService {
 
     public Flux<StockResponse> getAllStocks(BigDecimal priceGreaterThan) {
         return stocksRepository.findAll()
+                .filter(stock -> stock.getPrice().compareTo(priceGreaterThan) > 0)
                 .map(StockResponse::fromModel);
     }
 
